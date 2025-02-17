@@ -1,10 +1,18 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
 
 public class PaintApp extends JFrame {
     private DrawPanel drawPanel;
     private Color color = Color.BLACK;
     private boolean eraserMode = false;
+    private ImageIcon pencil;
+    private ImageIcon eraser;
+    private ImageIcon colors;
+    private ImageIcon shapes;
+
+
 
     public PaintApp(){
         setTitle("Paint App");
@@ -12,17 +20,26 @@ public class PaintApp extends JFrame {
         setLocation(50,50);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-//        setVisible(true);
 
 //        Tạo thanh công cụ
         JPanel toolPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JButton pencilButton = new JButton("Pencil");
-        JButton eraserButton = new JButton("Eraser");
-        JButton colorButton = new JButton("Color");
+        pencil= new ImageIcon(new ImageIcon("C:\\Users\\admin\\Paint\\src\\1047189-200.png").getImage().getScaledInstance(35,35,Image.SCALE_SMOOTH));
+        JButton pencilButton = new JButton(pencil);
+//        pencilButton.setSize(20,20);
+
+        eraser = new ImageIcon(new ImageIcon("C:\\Users\\admin\\Paint\\src\\eraser_732430.png").getImage().getScaledInstance(35,35,Image.SCALE_SMOOTH));
+        JButton eraserButton = new JButton(eraser);
+
+        colors =new ImageIcon( new ImageIcon("C:\\Users\\admin\\Paint\\src\\color_15109282.png").getImage().getScaledInstance(35,35,Image.SCALE_SMOOTH));
+        JButton colorButton = new JButton(colors);
+
+        shapes = new ImageIcon( new ImageIcon("C:\\Users\\admin\\Paint\\src\\shapes_10335711.png").getImage().getScaledInstance(35,35,Image.SCALE_SMOOTH));
+        JButton shapeButton = new JButton(shapes);
 
         toolPanel.add(pencilButton);
         toolPanel.add(eraserButton);
         toolPanel.add(colorButton);
+        toolPanel.add(shapeButton);
 
         add(toolPanel, BorderLayout.NORTH);
 
@@ -32,6 +49,7 @@ public class PaintApp extends JFrame {
 
         //  Thanh trạng thái
         JLabel statusBar = new JLabel(" Ready");
+
         add(statusBar, BorderLayout.SOUTH);
 
         // Xử lý sự kiện cho Pencil
