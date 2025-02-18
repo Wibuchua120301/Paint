@@ -18,7 +18,7 @@ public class PaintApp extends JFrame {
 
     private JLabel statusBar;
 
-    private char toolMode;
+    private char toolMode = 'P';
 
     public PaintApp(){
         setTitle("Paint App");
