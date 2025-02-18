@@ -57,7 +57,6 @@ class DrawPanel extends JPanel {
         for (ColoredPath shape : shapes) {
             g.setColor(shape.color); // sử dụng màu của từng đường
             drawShape(g, shape.point);
-            System.out.println(g.getColor());
         }
 
         // Vẽ đường đang vẽ dở
