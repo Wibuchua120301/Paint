@@ -20,25 +20,25 @@ public class PaintApp extends JFrame {
 
     private char toolMode = 'P';
 
-    public PaintApp(){
+    public PaintApp() {
         setTitle("Paint App");
-        setSize(1200,650);
-        setLocation(50,50);
+        setSize(1200, 650);
+        setLocation(50, 50);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
 //        Tạo thanh công cụ
         toolPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        pencil= new ImageIcon(new ImageIcon("src\\img\\1047189-200.png").getImage().getScaledInstance(35,35,Image.SCALE_SMOOTH));
+        pencil = new ImageIcon(new ImageIcon("src\\img\\1047189-200.png").getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH));
         pencilButton = new JButton(pencil);
 
-        eraser = new ImageIcon(new ImageIcon("src\\img\\eraser_732430.png").getImage().getScaledInstance(35,35,Image.SCALE_SMOOTH));
+        eraser = new ImageIcon(new ImageIcon("src\\img\\eraser_732430.png").getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH));
         eraserButton = new JButton(eraser);
 
-        colors =new ImageIcon( new ImageIcon("src\\img\\color_15109282.png").getImage().getScaledInstance(35,35,Image.SCALE_SMOOTH));
+        colors = new ImageIcon(new ImageIcon("src\\img\\color_15109282.png").getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH));
         colorButton = new JButton(colors);
 
-        shapes = new ImageIcon( new ImageIcon("src\\img\\shapes_10335711.png").getImage().getScaledInstance(35,35,Image.SCALE_SMOOTH));
+        shapes = new ImageIcon(new ImageIcon("src\\img\\shapes_10335711.png").getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH));
         shapeButton = new JButton(shapes);
 
         toolPanel.add(pencilButton);
