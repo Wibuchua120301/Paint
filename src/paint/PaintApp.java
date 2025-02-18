@@ -2,8 +2,6 @@ package paint;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.ImageObserver;
-import java.awt.image.ImageProducer;
 
 public class PaintApp extends JFrame {
     private DrawPanel drawPanel;
@@ -14,7 +12,13 @@ public class PaintApp extends JFrame {
     private ImageIcon colors;
     private ImageIcon shapes;
 
+    private JPanel toolPanel;
 
+    private JButton pencilButton, eraserButton, colorButton, shapeButton;
+
+    private JLabel statusBar;
+
+    private char toolMode;
 
     public PaintApp(){
         setTitle("Paint App");
@@ -24,19 +28,18 @@ public class PaintApp extends JFrame {
         setLayout(new BorderLayout());
 
 //        Tạo thanh công cụ
-        JPanel toolPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        toolPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         pencil= new ImageIcon(new ImageIcon("src\\img\\1047189-200.png").getImage().getScaledInstance(35,35,Image.SCALE_SMOOTH));
-        JButton pencilButton = new JButton(pencil);
-//        pencilButton.setSize(20,20);
+        pencilButton = new JButton(pencil);
 
         eraser = new ImageIcon(new ImageIcon("src\\img\\eraser_732430.png").getImage().getScaledInstance(35,35,Image.SCALE_SMOOTH));
-        JButton eraserButton = new JButton(eraser);
+        eraserButton = new JButton(eraser);
 
         colors =new ImageIcon( new ImageIcon("src\\img\\color_15109282.png").getImage().getScaledInstance(35,35,Image.SCALE_SMOOTH));
-        JButton colorButton = new JButton(colors);
+        colorButton = new JButton(colors);
 
         shapes = new ImageIcon( new ImageIcon("src\\img\\shapes_10335711.png").getImage().getScaledInstance(35,35,Image.SCALE_SMOOTH));
-        JButton shapeButton = new JButton(shapes);
+        shapeButton = new JButton(shapes);
 
         toolPanel.add(pencilButton);
         toolPanel.add(eraserButton);
@@ -46,23 +49,25 @@ public class PaintApp extends JFrame {
         add(toolPanel, BorderLayout.NORTH);
 
         //  Khu vực vẽ
-        drawPanel = new DrawPanel();
+        drawPanel = new DrawPanel(this);
         add(drawPanel, BorderLayout.CENTER);
 
         //  Thanh trạng thái
-        JLabel statusBar = new JLabel(" Ready");
+        statusBar = new JLabel(" Ready");
 
         add(statusBar, BorderLayout.SOUTH);
 
         // Xử lý sự kiện cho Pencil
         pencilButton.addActionListener(e -> {
             eraserMode = false;
+            toolMode = 'P';
             statusBar.setText(" Pencil mode");
         });
 
         // Xử lý sự kiện cho Eraser
         eraserButton.addActionListener(e -> {
             eraserMode = true;
+            toolMode = 'E';
             statusBar.setText(" Eraser mode");
         });
 
@@ -76,6 +81,13 @@ public class PaintApp extends JFrame {
         });
     }
 
+    public char getToolMode() {
+        return toolMode;
+    }
+
+    public Color getCurrentColor() {
+        return color;
+    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new PaintApp().setVisible(true));
