@@ -22,7 +22,11 @@ class DrawPanel extends JPanel {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                currentPath = new ColoredPath(parent.getCurrentColor());// Tạo đường mới
+                if (parent.getToolMode() == 'P') {
+                    currentPath = new ColoredPath(parent.getCurrentColor());// Tạo đường mới
+                } else if (parent.getToolMode() == 'E') {
+                    currentPath = new ColoredPath(Color.white); // màu cảu cục tẩy
+                }
                 currentPath.point.add(e.getPoint());
                 repaint();
             }
@@ -53,11 +57,16 @@ class DrawPanel extends JPanel {
         for (ColoredPath shape : shapes) {
             g.setColor(shape.color); // sử dụng màu của từng đường
             drawShape(g, shape.point);
+            System.out.println(g.getColor());
         }
 
         // Vẽ đường đang vẽ dở
         if (currentPath != null) {
-            g.setColor(currentPath.color); // Màu của đường vẽ dở
+            if (parent.getToolMode() == 'P') {
+                g.setColor(currentPath.color); // Màu của đường vẽ dở
+            } else if (parent.getToolMode() == 'E') {
+                g.setColor(Color.white);
+            }
             drawShape(g, currentPath.point);
         }
     }
