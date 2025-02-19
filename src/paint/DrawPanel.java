@@ -9,15 +9,18 @@ import java.util.List;
 
 class DrawPanel extends JPanel {
     private List<ColoredPath> shapes = new ArrayList<>(); // Lưu trữ từng đường riêng biệt
-    private ColoredPath currentPath = null;  // Đường đang vẽ với màu sắc hiện tại
+    private ColoredPath currentPath ;  // Đường đang vẽ với màu sắc hiện tại
     private PaintApp parent;
-
+    private List<List<ColoredPath>> allPaths;
+    private List<List<ColoredPath>> undoList = new ArrayList<>();
+    private List<List<ColoredPath>> redoList = new ArrayList<>();
     public DrawPanel(PaintApp parent) {
         this.parent = parent;
         setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(Color.decode("#708090"), 5),
                 BorderFactory.createLineBorder(Color.white, 1)));
         setBackground(Color.WHITE);
+        allPaths = new ArrayList<>(25);
 
         addMouseListener(new MouseAdapter() {
             @Override
@@ -33,17 +36,25 @@ class DrawPanel extends JPanel {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                shapes.add((currentPath)); // Lưu đường đã hoàn thành
+                if (currentPath != null && !currentPath.point.isEmpty()) {
+                    shapes.add((currentPath)); // Lưu đường đã hoàn thành
+                    undoList.add(new ArrayList<>(shapes));
+                    redoList.clear();
+                }
                 currentPath = null;
                 repaint();
             }
+
+
         });
 
         addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                currentPath.point.add(e.getPoint());
-                repaint();
+                if (currentPath!=null) {
+                    currentPath.point.add(e.getPoint());
+                    repaint();
+                }
             }
         });
 
@@ -67,6 +78,7 @@ class DrawPanel extends JPanel {
                 g.setColor(Color.white);
             }
             drawShape(g, currentPath.point);
+
         }
     }
 
@@ -75,6 +87,20 @@ class DrawPanel extends JPanel {
             Point p1 = points.get(i - 1);
             Point p2 = points.get(i);
             g.drawLine(p1.x, p1.y, p2.x, p2.y);
+        }
+    }
+    public void undo(){
+        if (!shapes.isEmpty()){
+            redoList.add(new ArrayList<>(shapes));
+            shapes.remove(shapes.size()-1);
+            repaint();
+        }
+    }
+    public void redo(){
+        if (!redoList.isEmpty()){
+            undoList.add(new ArrayList<>(shapes));
+            shapes =redoList.remove(redoList.size()-1);
+            repaint();
         }
     }
 }
