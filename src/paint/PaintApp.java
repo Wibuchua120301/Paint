@@ -16,11 +16,14 @@ public class PaintApp extends JFrame {
 
     private JPanel toolPanel;
 
-    private JButton pencilButton, eraserButton, colorButton, shapeButton,undoButton,redoButton;
+    private JButton pencilButton, eraserButton, colorButton, shapeButton, undoButton, redoButton;
 
     private JLabel statusBar;
 
     private char toolMode = 'P';
+
+    private JSlider thicknessSlider;
+    private JLabel thicknessLabel;
 
     public PaintApp() {
         setTitle("Paint App");
@@ -44,10 +47,20 @@ public class PaintApp extends JFrame {
         shapeButton = new JButton(shapes);
 
         JButton undoButton = new JButton("Undo");
-        undoButton.addActionListener(e->drawPanel.undo() );
+        undoButton.addActionListener(e -> drawPanel.undo());
 
         JButton redoButton = new JButton("Redo");
-        redoButton.addActionListener(e->drawPanel.redo() );
+        redoButton.addActionListener(e -> drawPanel.redo());
+
+        thicknessLabel = new JLabel("Độ dày: 5");
+        thicknessSlider = new JSlider(1, 20, 5);
+
+        // Thay đổi độ dày nét vẽ
+        thicknessSlider.addChangeListener(e -> {
+            int thickness = thicknessSlider.getValue();
+            thicknessLabel.setText("Độ dày: " + thickness);
+            drawPanel.setThickness(thickness);
+        });
 
         toolPanel.add(pencilButton);
         toolPanel.add(eraserButton);
@@ -55,6 +68,8 @@ public class PaintApp extends JFrame {
         toolPanel.add(shapeButton);
         toolPanel.add(undoButton);
         toolPanel.add(redoButton);
+        toolPanel.add(thicknessSlider);
+        toolPanel.add(thicknessLabel);
 
         add(toolPanel, BorderLayout.NORTH);
 
@@ -89,6 +104,7 @@ public class PaintApp extends JFrame {
                 statusBar.setText(" Color selected: " + color);
             }
         });
+
     }
 
     public char getToolMode() {
