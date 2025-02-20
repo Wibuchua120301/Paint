@@ -115,6 +115,6 @@ class DrawPanel extends JPanel {
     }
 
     public void setThickness(int thickness) {
-        this.currentThickness = thickness;
+         this.currentThickness = thickness;
     }
 }

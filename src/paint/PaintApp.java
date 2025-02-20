@@ -116,7 +116,7 @@ public class PaintApp extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new PaintApp().setVisible(true));
+        SwingUtilities.invokeLater(()  -> new PaintApp().setVisible(true));
 
     }
 }
