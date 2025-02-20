@@ -16,6 +16,6 @@ public class ColoredPath {
     }
 
     public int getThickness() {
-return thickness;
+        return thickness;
     }
 }
