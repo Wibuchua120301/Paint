@@ -22,6 +22,9 @@ public class PaintApp extends JFrame {
 
     private char toolMode = 'P';
 
+    private JSlider thicknessSlider;
+    private JLabel thicknessLabel;
+
     public PaintApp() {
         setTitle("Paint App");
         setSize(1200, 650);
@@ -49,12 +52,24 @@ public class PaintApp extends JFrame {
         JButton redoButton = new JButton("Redo");
         redoButton.addActionListener(e->drawPanel.redo() );
 
+        thicknessLabel = new JLabel("Độ dày: 5");
+        thicknessSlider = new JSlider(1, 20, 5);
+
+        // Thay đổi độ dày nét vẽ
+        thicknessSlider.addChangeListener(e -> {
+            int thickness = thicknessSlider.getValue();
+            thicknessLabel.setText("Độ dày: " + thickness);
+            drawPanel.setThickness(thickness);
+        });
+
         toolPanel.add(pencilButton);
         toolPanel.add(eraserButton);
         toolPanel.add(colorButton);
         toolPanel.add(shapeButton);
         toolPanel.add(undoButton);
         toolPanel.add(redoButton);
+        toolPanel.add(thicknessSlider);
+        toolPanel.add(thicknessLabel);
 
         add(toolPanel, BorderLayout.NORTH);
 
@@ -89,6 +104,7 @@ public class PaintApp extends JFrame {
                 statusBar.setText(" Color selected: " + color);
             }
         });
+
     }
 
     public char getToolMode() {
