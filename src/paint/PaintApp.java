@@ -55,7 +55,7 @@ public class PaintApp extends JFrame {
         thicknessLabel = new JLabel("Độ dày: 5");
         thicknessSlider = new JSlider(1, 20, 5);
 
-        // Thay đổi độ dày nét vẽ
+        // Thay đổi độ dày của nét vẽ
         thicknessSlider.addChangeListener(e -> {
             int thickness = thicknessSlider.getValue();
             thicknessLabel.setText("Độ dày: " + thickness);
