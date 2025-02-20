@@ -2,6 +2,8 @@ package paint;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PaintApp extends JFrame {
     private DrawPanel drawPanel;
@@ -14,7 +16,7 @@ public class PaintApp extends JFrame {
 
     private JPanel toolPanel;
 
-    private JButton pencilButton, eraserButton, colorButton, shapeButton;
+    private JButton pencilButton, eraserButton, colorButton, shapeButton,undoButton,redoButton;
 
     private JLabel statusBar;
 
@@ -41,10 +43,18 @@ public class PaintApp extends JFrame {
         shapes = new ImageIcon(new ImageIcon("src\\img\\shapes_10335711.png").getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH));
         shapeButton = new JButton(shapes);
 
+        JButton undoButton = new JButton("Undo");
+        undoButton.addActionListener(e->drawPanel.undo() );
+
+        JButton redoButton = new JButton("Redo");
+        redoButton.addActionListener(e->drawPanel.redo() );
+
         toolPanel.add(pencilButton);
         toolPanel.add(eraserButton);
         toolPanel.add(colorButton);
         toolPanel.add(shapeButton);
+        toolPanel.add(undoButton);
+        toolPanel.add(redoButton);
 
         add(toolPanel, BorderLayout.NORTH);
 
